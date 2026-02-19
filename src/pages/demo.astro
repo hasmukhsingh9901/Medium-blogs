@@ -1,0 +1,118 @@
+---
+// src/pages/demo.astro
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/ui/Card/Card.astro';
+import InteractiveCounter from '../components/ui/Counter/InteractiveCounter.tsx';
+import { Button } from "@/components/ui/button";
+
+// You can define data here (code fence)
+const demoData = [
+	{ title: "Static Generation", description: "Astro generates static HTML at build time for maximum performance.", buttonText: "Learn More", buttonHref: "https://docs.astro.build" },
+	{ title: "Functional Components", description: "Astro components are functional by nature and easy to understand.", buttonText: "Try It Out" },
+	{ title: "Islands Architecture", description: "Only hydrate what's necessary, keeping the rest of the page light.", buttonText: "Read More", buttonHref: "#" }
+];
+---
+
+<Layout>
+	<main>
+		<h1>Astro Component Demo</h1>
+		<p class="intro">
+			This page demonstrates how to use <strong>Functional Components</strong> in Astro.
+		</p>
+
+		<section class="logic-demo">
+			<InteractiveCounter client:load />
+		</section>
+
+		<section class="shadcn-demo my-8 p-6 border rounded-xl bg-slate-50">
+			<h2 class="text-2xl font-bold mb-4">Shadcn UI Demo</h2>
+			<div class="flex gap-4 flex-wrap">
+				<Button client:load variant="default">Default Button</Button>
+				<Button client:load variant="destructive">Destructive</Button>
+				<Button client:load variant="outline">Outline</Button>
+				<Button client:load variant="secondary">Secondary</Button>
+				<Button client:load variant="ghost">Ghost</Button>
+				<Button client:load variant="link">Link</Button>
+			</div>
+		</section>
+
+		<div class="card-container">
+			<!-- We can map over data and render components -->
+			{demoData.map(item => (
+				<Card 
+					title={item.title} 
+					description={item.description} 
+					buttonText={item.buttonText}
+					buttonHref={item.buttonHref}
+				/>
+			))}
+		</div>
+
+		<section class="explanation">
+			<h2>How it works:</h2>
+			<ul>
+				<li><strong>Import:</strong> We import the <code>Card</code> component in the code fence.</li>
+				<li><strong>Props:</strong> We pass data to each <code>&lt;Card /&gt;</code> using attributes.</li>
+				<li><strong>Scoped Style:</strong> The styles in <code>Card.astro</code> only apply to that component.</li>
+			</ul>
+		</section>
+		
+		<a href="/" class="back-link">← Back to Home</a>
+	</main>
+</Layout>
+
+<style>
+	main {
+		max-width: 1000px;
+		margin: 0 auto;
+		padding: 2rem;
+		font-family: system-ui, sans-serif;
+	}
+
+	h1 {
+		font-size: 3rem;
+		font-weight: 800;
+		color: #111827;
+		margin-bottom: 0.5rem;
+	}
+
+	.intro {
+		font-size: 1.25rem;
+		color: #4b5563;
+		margin-bottom: 3rem;
+	}
+
+	.card-container {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		margin-bottom: 4rem;
+	}
+
+	.explanation {
+		background: #f9fafb;
+		padding: 2rem;
+		border-radius: 12px;
+		margin-bottom: 2rem;
+	}
+
+	.explanation h2 {
+		margin-top: 0;
+	}
+
+	li {
+		margin-bottom: 0.5rem;
+	}
+
+	.back-link {
+		display: inline-block;
+		margin-top: 2rem;
+		color: #2563eb;
+		text-decoration: none;
+		font-weight: 500;
+	}
+
+	.back-link:hover {
+		text-decoration: underline;
+	}
+</style>
